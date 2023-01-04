@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+import Login from "./components/LoginComponent.vue";
 </script>
 
 <template>
@@ -14,7 +14,7 @@ import HelloWorld from "./components/HelloWorld.vue";
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <Login />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
@@ -26,7 +26,12 @@ import HelloWorld from "./components/HelloWorld.vue";
   <RouterView />
 </template>
 
-<style scoped>
+<style>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
 header {
   line-height: 1.5;
   max-height: 100vh;
