@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {supabase} from "@/lib/supabase/createClient";
+import { supabase } from "@/lib/supabase/createClient";
+console.log(supabase);
 </script>
 
 <template>

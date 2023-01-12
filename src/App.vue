@@ -14,10 +14,10 @@ import Login from "./components/LoginComponent.vue";
     />
 
     <div class="wrapper">
-      <Login />
+      <h1 class="text-xl font-bold">Hello world!</h1>
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/">Login</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
@@ -26,12 +26,7 @@ import Login from "./components/LoginComponent.vue";
   <RouterView />
 </template>
 
-<style>
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@tailwind variants;
-
+<style scoped>
 header {
   line-height: 1.5;
   max-height: 100vh;
