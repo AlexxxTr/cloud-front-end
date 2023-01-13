@@ -1,32 +1,39 @@
-<script setup lang="ts">
+<script lang="ts">
 import { supabase } from "@/lib/supabase/createClient";
-console.log(supabase);
+
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    async handleLogin(e: Event) {
+      e.preventDefault();
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: this.email,
+        password: this.password,
+      });
+    },
+  },
+};
 </script>
 
 <template>
-  <h1 class="greetings">Hello World!</h1>
+  <h1 class="text-center mt-5 text-2xl">
+    Please Log in to use your everything :)
+  </h1>
+  <form class="grid grid-cols-2 w-1/4 mx-auto gap-y-3" @submit="handleLogin">
+    <label for="email">E-mail</label>
+    <input type="email" name="email" id="email" v-model="email" />
+
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" v-model="password" />
+
+    <button type="submit" class="col-span-2" v-if="email && password">
+      Log In
+    </button>
+    <a href="/register" class="col-span-2 text-center">No account yet?</a>
+  </form>
 </template>
-
-<style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-}
-</style>

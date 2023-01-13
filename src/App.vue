@@ -1,24 +1,23 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import Login from "./components/LoginComponent.vue";
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <h1 class="text-xl font-bold">Hello world!</h1>
-
-      <nav>
-        <RouterLink to="/">Login</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+  <header class="w-full">
+    <div class="w-full">
+      <nav class="flex flex-row justify-evenly w-full">
+        <RouterLink to="/" class="relative group"
+          ><span>Login</span>
+          <span
+            class="absolute -bottom-1 left-0 w-0 h-1 bg-blue-400 transition-all group-hover:w-full"
+          />
+        </RouterLink>
+        <RouterLink to="/about" class="relative group">
+          <span>About</span>
+          <span
+            class="absolute -bottom-1 left-0 w-0 h-1 bg-blue-400 transition-all group-hover:w-full"
+          />
+        </RouterLink>
       </nav>
     </div>
   </header>
