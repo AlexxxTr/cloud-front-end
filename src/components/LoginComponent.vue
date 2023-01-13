@@ -1,6 +1,5 @@
 <script lang="ts">
 import { supabase } from "@/lib/supabase/createClient";
-
 export default {
   data() {
     return {
@@ -11,10 +10,11 @@ export default {
   methods: {
     async handleLogin(e: Event) {
       e.preventDefault();
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data } = await supabase.auth.signInWithPassword({
         email: this.email,
         password: this.password,
       });
+      if (data) window.location.href = "/home";
     },
   },
 };
@@ -34,6 +34,8 @@ export default {
     <button type="submit" class="col-span-2" v-if="email && password">
       Log In
     </button>
-    <a href="/register" class="col-span-2 text-center">No account yet?</a>
+    <RouterLink to="/register" class="col-span-2 text-center"
+      >No account yet?</RouterLink
+    >
   </form>
 </template>
