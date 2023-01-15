@@ -4,11 +4,14 @@ import { supabase } from "@/lib/supabase/createClient";
 import { useToast } from "vue-toastification";
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       lastReading: 0,
       currentReading: 0,
-      toast: useToast(),
     };
   },
   async mounted() {
@@ -36,6 +39,7 @@ export default {
             .insert({ cubic_meters: this.currentReading }, { count: "exact" }),
           supabase.from("gas_usages").insert({ kWh, cost: kWh * 14 }), // Here 14 is an average I currently found online
         ]);
+      // TODO: Updated this to RPC in supabase so that the row does not get inserted when one or the other does not work
 
       if (gasReadingError || gasUsageError)
         return this.toast.error("There was an error adding your readings");
