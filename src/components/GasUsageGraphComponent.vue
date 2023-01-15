@@ -1,9 +1,9 @@
 <script lang="ts">
-import { type ChartData, type ChartConfiguration, Chart } from "chart.js";
-import { ref, watchEffect } from "vue";
+import { type ChartData, type ChartConfiguration, Chart } from "chart.js/auto";
+import { ref } from "vue";
 export default {
   setup() {
-    const canvas = ref<HTMLCanvasElement | null>(null);
+    const gasUsageCanvas = ref<HTMLCanvasElement>();
     const data: ChartData = {
       labels: [1, 2, 3, 4, 5, 6, 7],
       datasets: [
@@ -21,17 +21,16 @@ export default {
       data,
     };
 
-    watchEffect(() => {
-      if (canvas.value !== null) new Chart(canvas.value, config);
-    });
-
-    return { canvas };
+    return { config, gasUsageCanvas };
+  },
+  mounted() {
+    new Chart(this.gasUsageCanvas!, this.config);
   },
 };
 </script>
 
 <template>
   <div>
-    <canvas class="gasUsageChart" ref="canvas"></canvas>
+    <canvas ref="gasUsageCanvas"></canvas>
   </div>
 </template>
