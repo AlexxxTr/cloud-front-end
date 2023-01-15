@@ -6,7 +6,7 @@ import type { GasUsage } from "@/lib/types/propTypes";
 
 export default {
   setup() {
-    const gasUsage = ref<Array<GasUsage>>([]);
+    const gasUsage = ref<Array<GasUsage>>();
     supabase
       .from("gas_usages")
       .select("*")

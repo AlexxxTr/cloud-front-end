@@ -12,7 +12,7 @@ export default {
 
     const data: ChartData = {
       labels: props.gasUsage?.map((usage) =>
-        new Date(usage.created_at!).toLocaleDateString()
+        new Date(usage.created_at!).toDateString()
       ),
       datasets: [
         {
@@ -25,7 +25,7 @@ export default {
         {
           label: "Gas Cost",
           data: props.gasUsage?.map((usage) => usage.cost!)!,
-          fill: true,
+          fill: false,
           tension: 0.1,
           borderColor: "red",
         },
