@@ -14,53 +14,62 @@ export interface Database {
           created_at: string | null;
           cubic_meters: number;
           id: number;
+          user_id: string;
         };
         Insert: {
           created_at?: string | null;
           cubic_meters: number;
           id?: number;
+          user_id?: string;
         };
         Update: {
           created_at?: string | null;
           cubic_meters?: number;
           id?: number;
+          user_id?: string;
         };
       };
-      gas_usage: {
+      gas_usages: {
         Row: {
           cost: number | null;
-          date: string | null;
+          created_at: string | null;
           id: number;
           kWh: number;
+          user_id: string;
         };
         Insert: {
           cost?: number | null;
-          date?: string | null;
+          created_at?: string | null;
           id?: number;
           kWh: number;
+          user_id?: string;
         };
         Update: {
           cost?: number | null;
-          date?: string | null;
+          created_at?: string | null;
           id?: number;
           kWh?: number;
+          user_id?: string;
         };
       };
-      temperature: {
+      temperatures: {
         Row: {
-          date: string | null;
+          created_at: string | null;
           id: number;
           temperature: number;
+          user_id: string;
         };
         Insert: {
-          date?: string | null;
+          created_at?: string | null;
           id?: number;
           temperature: number;
+          user_id?: string;
         };
         Update: {
-          date?: string | null;
+          created_at?: string | null;
           id?: number;
           temperature?: number;
+          user_id?: string;
         };
       };
     };

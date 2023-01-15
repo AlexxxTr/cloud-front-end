@@ -1,4 +1,5 @@
 <script lang="ts">
+import { convertCubicToKWH } from "@/lib/helpers/convertCubicToKwH.js";
 import { supabase } from "@/lib/supabase/createClient";
 export default {
   data() {
@@ -21,9 +22,20 @@ export default {
       e.preventDefault();
       if (this.currentReading <= this.lastReading)
         return console.log("nothing happened");
-      const { data, error } = await supabase
-        .from("gas_readings")
-        .insert({ cubic_meters: this.currentReading }, { count: "exact" });
+
+      const kWh = convertCubicToKWH(this.currentReading - this.lastReading);
+      const [{ error: gasReadingError }, { error: gasUsageError }] =
+        await Promise.all([
+          supabase
+            .from("gas_readings")
+            .insert({ cubic_meters: this.currentReading }, { count: "exact" }),
+          supabase.from("gas_usages").insert({ kWh, cost: kWh * 14 }), // Here 14 is an average I currently found online
+        ]);
+
+      if (gasReadingError || gasUsageError)
+        return console.log("Error inserting data into the database");
+
+      window.location.href = "/home";
     },
   },
 };
