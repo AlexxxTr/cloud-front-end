@@ -21,21 +21,52 @@ export default {
 </script>
 
 <template>
-  <h1 class="text-center mt-5 text-2xl">
-    Please Log in to use your everything :)
-  </h1>
-  <form class="grid grid-cols-2 w-1/4 mx-auto gap-y-3" @submit="handleLogin">
+  <h1 class="h1">Please log in</h1>
+  <p class="paragraph">This will unlock all your data and actions!</p>
+  <form class="form" @submit="handleLogin">
     <label for="email">E-mail</label>
-    <input type="email" name="email" id="email" v-model="email" />
+    <input type="email" name="email" id="email" v-model="email" class="input" />
 
     <label for="password">Password</label>
-    <input type="password" name="password" id="password" v-model="password" />
+    <input
+      type="password"
+      name="password"
+      id="password"
+      v-model="password"
+      class="input"
+    />
 
-    <button type="submit" class="col-span-2" v-if="email && password">
-      Log In
-    </button>
-    <RouterLink to="/register" class="col-span-2 text-center"
+    <button type="submit" class="btn">Log In</button>
+    <RouterLink to="/register" class="btn-no-outline"
       >No account yet?</RouterLink
     >
   </form>
 </template>
+
+<style lang="css">
+.h1 {
+  @apply text-center mt-5 text-2xl;
+}
+.paragraph {
+  @apply text-center text-gray-500 mb-3;
+}
+.form {
+  @apply grid grid-cols-2 w-1/3 mx-auto gap-y-3 gap-x-2 items-center justify-center;
+}
+input.input {
+  /* ^ Did this since the specificity was not precise enough and tailwind forms overrides this */
+  @apply rounded-md border-green-300 leading-tight appearance-none;
+}
+.btn {
+  @apply text-green-700 font-semibold py-2 px-4 border border-green-500 rounded-md;
+}
+.btn:hover {
+  @apply bg-green-500 text-white border-transparent;
+}
+.btn-no-outline {
+  @apply inline-block font-semibold py-2 px-4 rounded-md bg-green-400 text-white text-center h-full;
+}
+.btn-no-outline:hover {
+  @apply bg-green-700;
+}
+</style>
