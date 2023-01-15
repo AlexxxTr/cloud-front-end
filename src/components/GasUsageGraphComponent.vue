@@ -1,18 +1,33 @@
 <script lang="ts">
 import { type ChartData, type ChartConfiguration, Chart } from "chart.js/auto";
 import { ref } from "vue";
+import type { GasUsage } from "@/lib/types/propTypes";
+
 export default {
-  setup() {
+  props: {
+    gasUsage: Array<GasUsage>,
+  },
+  setup(props) {
     const gasUsageCanvas = ref<HTMLCanvasElement>();
+
     const data: ChartData = {
-      labels: [1, 2, 3, 4, 5, 6, 7],
+      labels: props.gasUsage?.map((usage) =>
+        new Date(usage.created_at!).toLocaleDateString()
+      ),
       datasets: [
         {
-          label: "lol",
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: true,
+          label: "Gas Usage in kWh",
+          data: props.gasUsage?.map((usage) => usage.kWh!)!,
+          fill: false,
           tension: 0.1,
           borderColor: "green",
+        },
+        {
+          label: "Gas Cost",
+          data: props.gasUsage?.map((usage) => usage.cost!)!,
+          fill: true,
+          tension: 0.1,
+          borderColor: "red",
         },
       ],
     };
