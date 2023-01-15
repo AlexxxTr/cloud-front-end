@@ -22,6 +22,11 @@ const router = createRouter({
       name: "register",
       component: () => import("../views/RegisterView.vue"),
     },
+    {
+      path: "/add-gas-usage",
+      name: "add-gas-usage",
+      component: () => import("../views/AddGasView.vue"),
+    },
   ],
 });
 
