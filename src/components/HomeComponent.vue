@@ -1,7 +1,10 @@
 <script lang="ts">
-export default {};
+import GasUsageGraphComponent from "./GasUsageGraphComponent.vue";
+export default { components: { GasUsageGraphComponent } };
 </script>
 
 <template>
-  <div>Some Details or something</div>
+  <div class="grid grid-cols-2 grid-rows-2 w-full h-[75vh]">
+    <GasUsageGraphComponent />
+  </div>
 </template>

@@ -1,6 +1,11 @@
 <script lang="ts">
 import { supabase } from "@/lib/supabase/createClient";
+import { useToast } from "vue-toastification";
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       email: "",
@@ -14,7 +19,8 @@ export default {
         email: this.email,
         password: this.password,
       });
-      if (data) window.location.href = "/home";
+      if (data.user) window.location.href = "/home";
+      else this.toast.error("Incorrect credentials!");
     },
   },
 };
@@ -43,7 +49,7 @@ export default {
   </form>
 </template>
 
-<style lang="css">
+<style lang="css" scoped>
 .h1 {
   @apply text-center mt-5 text-2xl;
 }

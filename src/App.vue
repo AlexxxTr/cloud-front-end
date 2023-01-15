@@ -2,14 +2,19 @@
 import { ref } from "vue";
 import { supabase } from "./lib/supabase/createClient";
 import { RouterLink, RouterView } from "vue-router";
-const isLoggedIn = ref(false);
-loggedIn();
+import { useToast } from "vue-toastification";
 
-async function loggedIn() {
-  const user = await supabase.auth.getUser();
-  isLoggedIn.value = user.data.user !== null;
+const toast = useToast();
+const isLoggedIn = ref(false);
+
+supabase.auth.onAuthStateChange((_, session) => {
+  isLoggedIn.value = !!session;
+});
+
+async function logOut() {
+  await supabase.auth.signOut();
+  window.location.href = "/";
 }
-loggedIn();
 </script>
 
 <template>
@@ -40,6 +45,7 @@ loggedIn();
             class="absolute -bottom-1 left-0 w-0 h-1 bg-blue-400 transition-all group-hover:w-full"
           />
         </RouterLink>
+        <button v-if="isLoggedIn" @click="logOut">Log Out</button>
       </nav>
     </div>
   </header>
