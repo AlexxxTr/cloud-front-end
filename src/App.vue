@@ -24,25 +24,23 @@ async function logOut() {
         <template v-if="!isLoggedIn">
           <RouterLink to="/" class="relative group"
             ><span>Login</span>
-            <span
-              class="absolute -bottom-1 left-0 w-0 h-1 bg-blue-400 transition-all group-hover:w-full"
-            />
+            <span class="nav-el" />
           </RouterLink>
         </template>
         <template v-if="isLoggedIn">
           <RouterLink to="/home" class="relative group">
             <span>Home</span>
-            <span
-              class="absolute -bottom-1 left-0 w-0 h-1 bg-blue-400 transition-all group-hover:w-full"
-            />
+            <span class="nav-el" />
           </RouterLink>
+
           <RouterLink to="/add-gas-usage" class="relative group">
             <span>Add Gas Usage</span>
-            <span
-              class="absolute -bottom-1 left-0 w-0 h-1 bg-blue-400 transition-all group-hover:w-full"
-            />
+            <span class="nav-el" />
           </RouterLink>
-          <button @click="logOut">Log Out</button>
+
+          <button @click="logOut" class="relative group">
+            <span>Log Out</span><span class="nav-el" />
+          </button>
         </template>
       </nav>
     </div>
@@ -50,3 +48,9 @@ async function logOut() {
 
   <RouterView />
 </template>
+
+<style scoped lang="css">
+.nav-el {
+  @apply absolute -bottom-1 left-0 w-0 h-1 bg-green-900 transition-all group-hover:w-full;
+}
+</style>
