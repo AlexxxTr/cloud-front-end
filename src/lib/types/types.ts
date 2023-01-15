@@ -9,7 +9,7 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      gas_reading: {
+      gas_readings: {
         Row: {
           created_at: string | null;
           cubic_meters: number;

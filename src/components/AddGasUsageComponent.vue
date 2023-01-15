@@ -9,27 +9,28 @@ export default {
   },
   async mounted() {
     const { data: gas_reading } = await supabase
-      .from("gas_reading")
+      .from("gas_readings")
       .select("cubic_meters")
       .order("created_at", { ascending: false });
+
     this.lastReading =
       gas_reading && gas_reading.length > 0 ? gas_reading[0].cubic_meters : 0;
   },
   methods: {
     async handleInsertReading(e: Event) {
       e.preventDefault();
-      if (this.currentReading < this.lastReading)
+      if (this.currentReading <= this.lastReading)
         return console.log("nothing happened");
       const { data, error } = await supabase
-        .from("gas_reading")
-        .insert({ cubic_meters: this.currentReading });
+        .from("gas_readings")
+        .insert({ cubic_meters: this.currentReading }, { count: "exact" });
     },
   },
 };
 </script>
 
 <template>
-  <form :on-submit="handleInsertReading">
+  <form @submit="handleInsertReading">
     <label for="lastReading">Last Reading entered</label>
     <input
       type="number"
