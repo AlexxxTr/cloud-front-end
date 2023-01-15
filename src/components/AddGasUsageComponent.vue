@@ -1,11 +1,13 @@
 <script lang="ts">
 import { convertCubicToKWH } from "@/lib/helpers/convertCubicToKwH.js";
 import { supabase } from "@/lib/supabase/createClient";
+import { useToast } from "vue-toastification";
 export default {
   data() {
     return {
       lastReading: 0,
       currentReading: 0,
+      toast: useToast(),
     };
   },
   async mounted() {
@@ -14,7 +16,7 @@ export default {
       .select("cubic_meters")
       .order("created_at", { ascending: false });
 
-    this.lastReading =
+    this.lastReading = this.currentReading =
       gas_reading && gas_reading.length > 0 ? gas_reading[0].cubic_meters : 0;
   },
   methods: {
@@ -33,7 +35,9 @@ export default {
         ]);
 
       if (gasReadingError || gasUsageError)
-        return console.log("Error inserting data into the database");
+        return this.toast.error("There was an error adding your readings");
+
+      this.toast.success("Successfully added your readings!");
 
       window.location.href = "/home";
     },
@@ -61,7 +65,7 @@ export default {
       name="currentReading"
       id="currentReading"
       v-model="currentReading"
-      min="0"
+      :min="lastReading"
     />
 
     <button type="submit" class="col-span-2">Add Reading</button>
