@@ -1,5 +1,5 @@
 <script lang="ts">
-import { convertCubicToKWH } from "@/lib/helpers/convertCubicToKwH.js";
+import { convertCubicToKWH } from "@/lib/helpers/convertCubicToKwH";
 import { supabase } from "@/lib/supabase/createClient";
 import { useToast } from "vue-toastification";
 
