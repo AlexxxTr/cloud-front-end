@@ -2,6 +2,7 @@
 import { convertCubicToKWH } from "@/lib/helpers/convertCubicToKwH.js";
 import { supabase } from "@/lib/supabase/createClient";
 import { useToast } from "vue-toastification";
+
 export default {
   data() {
     return {
@@ -23,7 +24,9 @@ export default {
     async handleInsertReading(e: Event) {
       e.preventDefault();
       if (this.currentReading <= this.lastReading)
-        return console.log("nothing happened");
+        return this.toast.warning(
+          "The new reading should be above the last reading"
+        );
 
       const kWh = convertCubicToKWH(this.currentReading - this.lastReading);
       const [{ error: gasReadingError }, { error: gasUsageError }] =
@@ -57,6 +60,7 @@ export default {
       name="lastReading"
       v-model="lastReading"
       disabled
+      class="input"
     />
 
     <label for="currentReading">New Reading</label>
@@ -66,8 +70,26 @@ export default {
       id="currentReading"
       v-model="currentReading"
       :min="lastReading"
+      class="input"
     />
 
-    <button type="submit" class="col-span-2">Add Reading</button>
+    <button type="submit" class="col-span-2 btn g-transparent">
+      Add Reading
+    </button>
   </form>
 </template>
+
+<style>
+.btn {
+  @apply text-green-700 font-semibold py-2 px-4 border border-green-500 rounded-md;
+}
+.btn:hover {
+  @apply bg-green-500 text-white border-transparent;
+}
+.input {
+  @apply rounded-md border-green-300 leading-tight appearance-none;
+}
+.input:focus {
+  @apply outline-none border-green-400;
+}
+</style>
