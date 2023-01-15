@@ -15,10 +15,12 @@ export default {
   methods: {
     async handleLogin(e: Event) {
       e.preventDefault();
+
       const { data } = await supabase.auth.signInWithPassword({
         email: this.email,
         password: this.password,
       });
+
       if (data.user) window.location.href = "/home";
       else this.toast.error("Incorrect credentials!");
     },
