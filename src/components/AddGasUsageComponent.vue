@@ -42,7 +42,10 @@ export default {
 </script>
 
 <template>
-  <form @submit="handleInsertReading">
+  <form
+    class="grid grid-cols-2 w-1/3 mx-auto gap-y-2 items-center justify-center"
+    @submit="handleInsertReading"
+  >
     <label for="lastReading">Last Reading entered</label>
     <input
       type="number"
@@ -61,6 +64,6 @@ export default {
       min="0"
     />
 
-    <button type="submit">Add Reading</button>
+    <button type="submit" class="col-span-2">Add Reading</button>
   </form>
 </template>
