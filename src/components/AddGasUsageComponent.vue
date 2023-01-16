@@ -75,6 +75,7 @@ export default {
       v-model="currentReading"
       :min="lastReading"
       class="input"
+      :step="0.00001"
     />
 
     <button type="submit" class="col-span-2 btn g-transparent">

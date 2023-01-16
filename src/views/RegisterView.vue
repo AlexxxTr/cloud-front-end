@@ -4,7 +4,6 @@ import RegisterComponent from "@/components/RegisterComponent.vue";
 
 <template>
   <main>
-    <h1>Please register an account</h1>
     <RegisterComponent />
   </main>
 </template>
