@@ -10,7 +10,7 @@ export default {
     supabase
       .from("gas_usages")
       .select("*")
-      .then((items) => (items.data ? (gasUsage.value = items.data) : null));
+      .then(({ data }) => (data ? (gasUsage.value = data) : null));
     return { gasUsage };
   },
   components: { GasUsageGraphComponent },
