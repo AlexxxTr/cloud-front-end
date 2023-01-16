@@ -21,20 +21,20 @@ export class GasUsage {
 
 export class GasReading {
   public created_at: string | null;
+  public cubic_meters: number;
   public id: number;
   public user_id: string;
-  public cubic_metres: number;
 
   constructor(
     created_at: string | null,
+    cubic_meters: number,
     id: number,
-    user_id: string,
-    cubic_metres: number
+    user_id: string
   ) {
     this.created_at = created_at;
     this.id = id;
     this.user_id = user_id;
-    this.cubic_metres = cubic_metres;
+    this.cubic_meters = cubic_meters;
   }
 }
 

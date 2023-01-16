@@ -2,7 +2,8 @@
 import { supabase } from "@/lib/supabase/createClient";
 import { ref } from "vue";
 import GasUsageGraphComponent from "./GasUsageGraphComponent.vue";
-import type { GasUsage } from "@/lib/types/propTypes";
+import GasReadingGraphComponent from "./GasReadingGraphComponent.vue";
+import type { GasReading, GasUsage } from "@/lib/types/propTypes";
 
 export default {
   setup() {
@@ -11,14 +12,21 @@ export default {
       .from("gas_usages")
       .select("*")
       .then(({ data }) => (data ? (gasUsage.value = data) : null));
-    return { gasUsage };
+
+    const gasReading = ref<Array<GasReading>>();
+    supabase
+      .from("gas_readings")
+      .select("*")
+      .then(({ data }) => (data ? (gasReading.value = data) : null));
+    return { gasUsage, gasReading };
   },
-  components: { GasUsageGraphComponent },
+  components: { GasUsageGraphComponent, GasReadingGraphComponent },
 };
 </script>
 
 <template>
   <div class="grid grid-cols-2 grid-rows-2 w-full h-[75vh]">
     <GasUsageGraphComponent v-if="gasUsage" :gas-usage="gasUsage" />
+    <GasReadingGraphComponent v-if="gasReading" :gas-readings="gasReading" />
   </div>
 </template>
