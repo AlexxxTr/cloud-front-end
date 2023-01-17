@@ -2,8 +2,12 @@
 import { ref } from "vue";
 import { supabase } from "./lib/supabase/createClient";
 import { RouterLink, RouterView } from "vue-router";
+import { useBluetooth } from "@vueuse/core";
 
 const isLoggedIn = ref(false);
+const { isSupported, isConnected, requestDevice, device } = useBluetooth({
+  acceptAllDevices: true,
+});
 
 supabase.auth.onAuthStateChange((_, session) => {
   isLoggedIn.value = !!session;
@@ -37,6 +41,20 @@ async function logOut() {
             <span>Add Gas Usage</span>
             <span class="nav-el" />
           </RouterLink>
+
+          <template v-if="isSupported">
+            <button
+              v-if="!isConnected"
+              @click="requestDevice()"
+              class="relative group"
+            >
+              <span>Connect to your coffee machine</span><span class="nav-el" />
+            </button>
+
+            <button v-else class="relative group">
+              <span>Get some coffee</span><span class="nav-el" />
+            </button>
+          </template>
 
           <button @click="logOut" class="relative group">
             <span>Log Out</span><span class="nav-el" />
