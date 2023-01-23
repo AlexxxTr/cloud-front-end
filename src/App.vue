@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watchEffect, onMounted } from "vue";
 import { supabase } from "./lib/supabase/createClient";
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView, useRouter } from "vue-router";
+import { useBluetooth } from "@vueuse/core";
 
 const isLoggedIn = ref(false);
+const router = useRouter();
+const { isSupported, isConnected, requestDevice, device } = useBluetooth({
+  acceptAllDevices: true,
+});
 
 supabase.auth.onAuthStateChange((_, session) => {
   isLoggedIn.value = !!session;
@@ -11,8 +16,15 @@ supabase.auth.onAuthStateChange((_, session) => {
 
 async function logOut() {
   await supabase.auth.signOut();
-  window.location.href = "/";
+  router.push({ name: "login" });
 }
+
+// onMounted(async () => {
+//   const mqttClient = await import("./lib/helpers/mqttConnection");
+//   mqttClient.createConnection();
+// });
+
+watchEffect(() => (device.value ? device.value.gatt.connect() : null));
 </script>
 
 <template>
@@ -37,6 +49,20 @@ async function logOut() {
             <span>Add Gas Usage</span>
             <span class="nav-el" />
           </RouterLink>
+
+          <template v-if="isSupported">
+            <button
+              v-if="!isConnected"
+              @click="requestDevice()"
+              class="relative group"
+            >
+              <span>Connect to your coffee machine</span><span class="nav-el" />
+            </button>
+
+            <button v-else class="relative group">
+              <span>Get some coffee</span><span class="nav-el" />
+            </button>
+          </template>
 
           <button @click="logOut" class="relative group">
             <span>Log Out</span><span class="nav-el" />
