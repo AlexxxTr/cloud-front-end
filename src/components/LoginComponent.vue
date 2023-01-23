@@ -1,6 +1,7 @@
 <script lang="ts">
 import { supabase } from "@/lib/supabase/createClient";
 import { useToast } from "vue-toastification";
+
 export default {
   setup() {
     const toast = useToast();
@@ -21,7 +22,7 @@ export default {
         password: this.password,
       });
 
-      if (data.user) window.location.href = "/home";
+      if (data.user) this.$router.push("home");
       else this.toast.error("Incorrect credentials!");
     },
   },
@@ -33,7 +34,14 @@ export default {
   <p class="paragraph">This will unlock all your data and actions!</p>
   <form class="form" @submit="handleLogin">
     <label for="email">E-mail</label>
-    <input type="email" name="email" id="email" v-model="email" class="input" />
+    <input
+      type="email"
+      name="email"
+      id="email"
+      v-model="email"
+      class="input"
+      autocomplete="email"
+    />
 
     <label for="password">Password</label>
     <input
@@ -42,6 +50,7 @@ export default {
       id="password"
       v-model="password"
       class="input"
+      autocomplete="current-password"
     />
 
     <button type="submit" class="btn">Log In</button>

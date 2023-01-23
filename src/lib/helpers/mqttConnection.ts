@@ -27,7 +27,7 @@ const data: {
   subscribeSuccess: boolean;
 } = {
   connection: {
-    host: "192.168.137.187",
+    host: "193.191.179.243",
     port: 8083,
     endpoint: "/mqtt/pimylifeup",
     clean: true, // Reserved session
@@ -59,8 +59,13 @@ const data: {
 export function createConnection() {
   console.log("Connecting...");
   const { host, port, endpoint, ...options } = data.connection;
-  const connectUrl = `mqtts://${host}:${port}${endpoint}`;
-  data.client = mqtt.connect(connectUrl, options);
+  const connectUrl = `mqtt://${host}:${port}${endpoint}`;
+  try {
+    data.client = mqtt.connect(connectUrl, options);
+  } catch (e: any) {
+    throw new Error("Connection failed");
+  }
+
   data.client.on("connect", () => {
     console.log("Connection succeeded!");
   });
