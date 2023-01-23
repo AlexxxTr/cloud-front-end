@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watchEffect, onMounted } from "vue";
 import { supabase } from "./lib/supabase/createClient";
 import { RouterLink, RouterView } from "vue-router";
 import { useBluetooth } from "@vueuse/core";
+import { createConnection } from "./lib/helpers/mqttConnection";
 
 const isLoggedIn = ref(false);
 const { isSupported, isConnected, requestDevice, device } = useBluetooth({
@@ -17,6 +18,9 @@ async function logOut() {
   await supabase.auth.signOut();
   window.location.href = "/";
 }
+onMounted(() => createConnection());
+
+watchEffect(() => (device.value ? device.value.gatt.connect() : null));
 </script>
 
 <template>
